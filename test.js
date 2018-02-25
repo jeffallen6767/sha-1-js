@@ -4,7 +4,7 @@ var
   tester = require("testing").config({
     "fail.color": "white"
   }),
-	fs = require('fs'),
+  fs = require('fs'),
   utf8 = require('utf8'),
   FORMAT_MAX_MSG_LEN = 45,
   tests = [],
