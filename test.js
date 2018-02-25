@@ -1,25 +1,23 @@
 
 var 
   sha1 = require("./index"),
-  tester = require("testing").config({
-    "fail.color": "white"
-  }),
+  tester = require("testing"),
   fs = require('fs'),
   utf8 = require('utf8'),
   FORMAT_MAX_MSG_LEN = 45,
   tests = [],
   testData = [
-    /*
+    
     [
       "",
       "da39a3ee5e6b4b0d3255bfef95601890afd80709"
     ],
-    */
+    
     [
       "hello",
       "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
     ],
-    /*
+    
     [
       "Jeffrey David Allen",
       "a3b4bd5d83d2fb6f04e802552c4a9c99746dca15"
@@ -37,20 +35,20 @@ var
     
     [
       "í",
-      "b54664965911c6fe91e18cd01b68a75c8183b530"
+      "265a0ae38fd8bef7d06ad56d84965afa92b59ee3"
     ],
 
     [
       fs.readFileSync("./data/5k.txt", 'utf8'),
-      "????????????"
+      "e2b347adc72dae05172ee4d800cdc9ebacd16ce5"
     ],
     
   
     [
       fs.readFileSync("./data/a_1m.dat.txt", 'utf8'),
-      "????????????"
+      "34aa973cd4c4daa4f61eeb2bdbad27316534016f"
     ]
-  */
+  
   ];
 
 function testFormat(msg, max) {

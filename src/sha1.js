@@ -31,9 +31,7 @@ var
   MSG_SIZE_BYTES = 8,
   MIN_PRE_CALC_BYTES = MIN_PAD_BYTES + MSG_SIZE_BYTES,
   ZERO_BITS_4_BYTES = "00000000",
-  ZERO_BITS_8_BYTES = ZERO_BITS_4_BYTES + ZERO_BITS_4_BYTES,
-  
-  noop;
+  ZERO_BITS_8_BYTES = ZERO_BITS_4_BYTES + ZERO_BITS_4_BYTES;
 
 function toHex(uInt32) {
   var 
@@ -109,6 +107,18 @@ function sha1(input, next) {
     buffer = inputBuffer.buffer,
     width = inputBuffer.width,
     
+    h0 = 0x67452301,
+    h1 = 0xEFCDAB89,
+    h2 = 0x98BADCFE,
+    h3 = 0x10325476,
+    h4 = 0xC3D2E1F0,
+    
+    words,
+    
+    a,b,c,d,e,
+    
+    f,k,
+    
     x,y,z,
     
     output = "**not yet implemented**";
@@ -116,28 +126,64 @@ function sha1(input, next) {
   // Process the message buffer in successive 512-bit chunks:
   for (x=0; x<width; x+=BLOCK_SIZE_BYTES) {
 
-    // break chunk into sixteen 32-bit word values w[z], 0 ≤ z ≤ 15
+    // break chunk into sixteen 32-bit word values words[z], 0 ≤ z ≤ 15
     words = new Array(CHUNK_WORD_SIZE);
-    console.log("block", x, "contains:");
     for (z=0; z<HEX_SIZE; z++) {
       y = x + z * WORD_SIZE_BYTES;
       // calc big-endian word value from 4 bytes in buffer:
       words[z] = buffer[y] * BYTE_MULT_32_1 + buffer[y+1] * BYTE_MULT_32_2 + buffer[y+2] * BYTE_MULT_32_3 + buffer[y+3];
-      console.log("[" + z + "]", words[z] >>> 0);
     }
     
-    // Extend the sixteen 32-bit words into eighty 32-bit words:
+    // Extend the sixteen 32-bit words into eighty 32-bit words, 16 ≤ z ≤ 79
     for (z=HEX_SIZE; z<CHUNK_WORD_SIZE; z++) {
       words[z] = leftRotate(words[z-3] ^ words[z-8] ^ words[z-14] ^ words[z-16], 1);
-      console.log("[" + z + "]", words[z] >>> 0);
     }
     
+    // Initialize hash value for this chunk:
+    a = h0
+    b = h1
+    c = h2
+    d = h3
+    e = h4
     
+    // Main loop:
+    for (y=0; y<CHUNK_WORD_SIZE; y++) {
+      
+      //  The four round constants k are 2^30 times the square roots of 2, 3, 5 and 10. 
+      if (y < 20) {
+        f = (b & c) | ((~ b) & d);
+        k = 0x5A827999;
+      } else if (y < 40) {
+        f = b ^ c ^ d;
+        k = 0x6ED9EBA1;
+      } else if (y < 60) {
+        f = (b & c) | (b & d) | (c & d);
+        k = 0x8F1BBCDC;
+      } else {
+        f = b ^ c ^ d;
+        k = 0xCA62C1D6;
+      }
+      
+      // calc and mix
+      z = leftRotate(a, 5) + f + e + k + words[y];
+      e = d;
+      d = c;
+      c = leftRotate(b, 30);
+      b = a;
+      a = z;
+      
+    }
     
-    // TODO: calculation of hash....
-    
+    // Add this chunk's hash to result so far:
+    h0 = (h0 + a) >>> 0;
+    h1 = (h1 + b) >>> 0;
+    h2 = (h2 + c) >>> 0;
+    h3 = (h3 + d) >>> 0;
+    h4 = (h4 + e) >>> 0;
   }
   
+  //Produce the final hash value (big-endian) as a 160-bit number:
+  output = [h0, h1, h2, h3, h4].map(toHex).join("");
   
   // allow sync or async:
   return "function" === typeof next ? next(output) : output;
