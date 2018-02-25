@@ -6,11 +6,15 @@ Based on pseudocode found here:
 
 https://en.wikipedia.org/wiki/SHA-1#Examples_and_pseudocode
 
-## Install and use in your project:
+
+## Install globally and use on the command line:
 
 ```sh
-npm install --save sha-1-js
+git clone https://github.com/jeffallen6767/sha-1-js.git
+cd sha-1-js
+npm install -g
 ```
+
 
 ## Usage
 
@@ -37,14 +41,6 @@ console.log(
 );
 
 // 265a0ae38fd8bef7d06ad56d84965afa92b59ee3
-```
-
-## Install globally and use on the command line:
-
-```sh
-git clone https://github.com/jeffallen6767/sha-1-js.git
-cd sha-1-js
-npm install -g
 ```
 
 Examples:
