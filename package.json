@@ -4,7 +4,7 @@
   "description": "sha-1 in javascript",
   "main": "index.js",
   "bin": {
-    "sha256": "./cli.js"
+    "sha1": "./cli.js"
   },
   "scripts": {
     "test": "node test.js"
