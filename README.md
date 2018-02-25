@@ -61,7 +61,7 @@ Examples:
     -c, --compare [checksum]  Checksum to compare generated with
     -h, --help                output usage information
 
-C:\Users\Malachi\Downloads>dir
+C:\Users\jeffa\Downloads>dir
 
     Directory: C:\Users\jeffa\Downloads
 
@@ -70,13 +70,13 @@ Mode                LastWriteTime         Length Name
 ----                -------------         ------ ----
 -a----        2/18/2018   5:55 PM        4521784 npp.7.5.4.Installer.x64.exe
 
-C:\Users\Malachi\Downloads>sha1 -f .\npp.7.5.4.Installer.x64.exe
+C:\Users\jeffa\Downloads>sha1 -f .\npp.7.5.4.Installer.x64.exe
 f6f63a8c489410f465ddbbd2d90f6ba97f590b48
 
-C:\Users\Malachi\Downloads>sha1 -m abc
+C:\Users\jeffa\Downloads>sha1 -m abc
 a9993e364706816aba3e25717850c26c9cd0d89d
 
-C:\Users\Malachi\Downloads>sha1 -m "a b c"
+C:\Users\jeffa\Downloads>sha1 -m "a b c"
 6b3f339c67bb03d57a7195cf43ed86b12bfdd347
 
 ```
