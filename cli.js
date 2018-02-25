@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var 
-  md5 = require("./index"),
+  sha1 = require("./index"),
   colors = require("colors"),
   fs = require('fs'),
   utf8 = require('utf8'),
@@ -15,8 +15,8 @@ var
   
 program
   .version(version)
-  .option('-m, --message [text]', 'text to apply md5')
-  .option('-f, --file [path]', 'file to apply md5')
+  .option('-m, --message [text]', 'text to apply sha-1')
+  .option('-f, --file [path]', 'file to apply sha-1')
   .option('-c, --compare [checksum]', 'Checksum to compare generated with')
   .parse(process.argv);
 
@@ -44,13 +44,13 @@ done = function(result) {
 
 if (filePath) {
   done(
-    md5(
+    sha1(
       fs.readFileSync(filePath)
     )
   );
 } else if (message) {
   done(
-    md5(
+    sha1(
       utf8.encode(message)
     )
   );
